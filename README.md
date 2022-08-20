@@ -19,3 +19,17 @@ Te current version process is very manual, improvements are coming
 ```sh
 yarn dev
 ```
+
+# Enrich huts file
+
+Checking huts is limited to the huts in [this](./src/models/huts.js) file, add more in case the hut of interest is not there
+to get the ID use the search browser and navigate to the wep page to reserve the desired hut, then check the URL and get the ID from
+the query params
+
+example for Höllentalangerhütte the ulr is https://www.alpsonline.org/reservation/calendar?hut_id=73 and the id is 73
+
+# How to add your huts and dates
+
+limitation! this version only check dates within a range of 13 days, future versions will fix that
+
+enrich or edit the `hutsToWatch` and `datesToWatch` arrays in [app.js](./app.js)

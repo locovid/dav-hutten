@@ -13,6 +13,7 @@ setInterval(async function () {
 async function checkHuts() {
   const hutsToWatch = [huts.knorrHut, huts.reintalangerHut];
 
+  // Format "DD.MM.YYYY"
   const datesToWatch = ["02.09.2022", "03.09.2022", "04.09.2022", "01.09.2022"];
 
   const availability = await getHutsAvailabilities(hutsToWatch, datesToWatch);
