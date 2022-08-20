@@ -2,7 +2,7 @@
   "name": "dav-hutten",
   "version": "1.0.0",
   "node": ">=14.16",
-  "description": "App to get the availability of DAV hutten",
+  "description": "App to get the availability of DAV huts",
   "exports": "./app.js",
   "author": "Leidy Patricia Garzon Rodriguez",
   "license": "MIT",

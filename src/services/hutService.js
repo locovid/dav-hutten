@@ -4,23 +4,27 @@ export async function getHutsAvailabilities(hutsToWatch, datesToWatch) {
   const availabilities = await Promise.all(
     hutsToWatch.map(async (hut) => {
       const sessionId = await getSessionId(hut.id);
+
       const reservationsObj = await getReservations({
-        initialDate: datesToWatch[0], // Todo: iterate peer dates
+        datesToWatch,
         sessionId,
       });
 
-      // TODO: filter by date, currently i know the first result its the given date
-      const availabilitiesForDate = Object.values(
-        Object.values(reservationsObj)[0]
+      const availabilitiesForDates = Object.values(
+        Object.values(reservationsObj).flat()
       );
 
-      const availableBeds = availabilitiesForDate
+      const availableBeds = availabilitiesForDates
         .filter(
-          (hutBed) => hutBed.bedCategoryType === "ROOM" && hutBed.freeRoom > 0
+          (hutBed) =>
+            hutBed.bedCategoryType === "ROOM" &&
+            hutBed.freeRoom > 0 &&
+            datesToWatch.includes(hutBed.reservationDate)
         )
         .map((hutBed) => ({
           bedCategoryId: hutBed.bedCategoryId,
           freeRoom: hutBed.freeRoom,
+          reservationDate: hutBed.reservationDate,
         }));
 
       if (!availableBeds.length) {
@@ -29,7 +33,7 @@ export async function getHutsAvailabilities(hutsToWatch, datesToWatch) {
 
       return {
         hutName: hut.name,
-        availableBeds: availableBeds.flatMap((availableBed) => availableBed),
+        availableBeds: availableBeds.flat(),
       };
     })
   );
